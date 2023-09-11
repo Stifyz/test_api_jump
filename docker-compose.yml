@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:15.4-alpine3.18
+    container_name: db
+    restart: always
+    networks:
+      - api-network
+    environment:
+      - POSTGRES_USER=jump
+      - POSTGRES_PASSWORD=password
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./external/database/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+      - db:/var/lib/postgresql/data
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api
+    restart: always
+    networks:
+      - api-network
+    ports:
+      - '8080:8080'
+    depends_on:
+      - db
+    links:
+      - db 
+volumes:
+  db:
+    driver: local
+networks:
+  api-network:
+    name: api-network
