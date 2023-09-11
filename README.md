@@ -19,3 +19,10 @@ To launch docker in dev mod:
 - `internal/repositories/errors`  defines errors which can be returned by the repositories
 - `internal/routes`               setups handlers on route's paths
 - `internal/services`             makes links between handlers and repositories
+
+# Some improvements
+- Secure database connection
+- Better errors management
+- More error tests
+- Add a linter
+- Setup database migration
